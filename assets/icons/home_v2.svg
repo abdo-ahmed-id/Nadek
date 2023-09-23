@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50.983" height="50.427" viewBox="0 0 50.983 50.427">
+  <defs>
+    <filter id="home-1-svgrepo-com" x="0" y="0" width="50.983" height="50.427" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="home-1-svgrepo-com-2" data-name="home-1-svgrepo-com" transform="translate(9 6)">
+    <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#home-1-svgrepo-com)">
+      <path id="home-1-svgrepo-com-3" data-name="home-1-svgrepo-com" d="M32.636,11.744l-10.62-8.5a6.1,6.1,0,0,0-7.377-.016L4.019,11.744a6.35,6.35,0,0,0-2.124,5.561L3.938,29.531a6.025,6.025,0,0,0,5.788,4.9H26.912a6.118,6.118,0,0,0,5.8-4.913L34.76,17.289A6.514,6.514,0,0,0,32.636,11.744Zm-13.1,16.2a1.216,1.216,0,1,1-2.432,0V23.078a1.216,1.216,0,1,1,2.432,0Z" transform="translate(7.17 4)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

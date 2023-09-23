@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "638431276153",
+    "project_id": "nadek-bd375",
+    "storage_bucket": "nadek-bd375.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638431276153:android:f336be767ab5d27ecef8a8",
+        "android_client_info": {
+          "package_name": "com.nadek.nadek.nadek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638431276153-o3m1cojhrf6ct6pq399svg2engsgu5io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-vlm-FbOQ3DVHlsDoLhocxcf6w-3zjPs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638431276153-o3m1cojhrf6ct6pq399svg2engsgu5io.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

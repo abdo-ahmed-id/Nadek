@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46.486" height="46.061" viewBox="0 0 46.486 46.061">
+  <defs>
+    <filter id="diamonds-svgrepo-com" x="0" y="0" width="46.486" height="46.061" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="diamonds-svgrepo-com-2" data-name="diamonds-svgrepo-com" transform="translate(9 6)">
+    <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#diamonds-svgrepo-com)">
+      <path id="diamonds-svgrepo-com-3" data-name="diamonds-svgrepo-com" d="M30.158,13.044,29.018,10.48,26.512,4.84a4.088,4.088,0,0,0-4.145-2.692H10.119A4.088,4.088,0,0,0,5.974,4.84L3.468,10.48,2.328,13.044a4.96,4.96,0,0,0,.8,4.9l9.756,10.739a4.462,4.462,0,0,0,6.722,0L29.36,17.943A4.96,4.96,0,0,0,30.158,13.044Z" transform="translate(7 3.85)" fill="#8c2aae"/>
+    </g>
+  </g>
+</svg>
