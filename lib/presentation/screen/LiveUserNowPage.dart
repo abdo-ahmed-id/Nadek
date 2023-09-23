@@ -1,6 +1,4 @@
-/*
-import 'package:agora_rtc_engine/rtc_engine.dart';
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -161,7 +159,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _engine.destroy();
+    _engine.release();
   }
 
   Future<void> initAgora() async {
@@ -169,22 +167,23 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     await [Permission.microphone, Permission.camera].request();
     await _initAgoraRtcEngine();
 
-    _engine.setEventHandler(
+    _engine.registerEventHandler(
       RtcEngineEventHandler(
-        joinChannelSuccess: (String channel, int uid, int elapsed) {
+        onJoinChannelSuccess: (RtcConnection connection, int uid) {
           print("local user $uid joined");
 
           setState(() {
             _localUserJoined = true;
           });
         },
-        userJoined: (int uid, int elapsed) {
+        onUserJoined: (RtcConnection connection, int uid, int elapsed) {
           print("remote user $uid joined");
           setState(() {
             _remoteUid = uid;
           });
         },
-        userOffline: (int uid, UserOfflineReason reason) {
+        onUserOffline:
+            (RtcConnection connection, int uid, UserOfflineReasonType reason) {
           print("remote user $uid left channel");
 
           setState(() {
@@ -194,22 +193,27 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
       ),
     );
 
-    await _engine.joinChannel(null, widget.token.toString(), null, 0);
+    await _engine.joinChannel(
+      token: widget.token ?? '',
+      channelId: widget.token ?? '',
+      options: const ChannelMediaOptions(
+        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+      ),
+      uid: _remoteUid ?? 0,
+    );
   }
 
   Future<void> _initAgoraRtcEngine() async {
     // _engine =  await RtcEngine.create(string_app.appId);
-    _engine =
-        await RtcEngine.createWithContext(RtcEngineContext(string_app.appId));
+    _engine = createAgoraRtcEngine();
+    await _engine.initialize(const RtcEngineContext(appId: string_app.appId));
     await _engine.enableVideo();
     await _engine.enableAudio();
 
-    await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    if (false) {
-      await _engine.setClientRole(ClientRole.Broadcaster);
-    } else {
-      await _engine.setClientRole(ClientRole.Audience);
-    }
+    await _engine
+        .setChannelProfile(ChannelProfileType.channelProfileLiveBroadcasting);
+    await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
   }
 
   @override
@@ -232,10 +236,17 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     if (_remoteUid != null) {
       return Stack(
         children: [
-          RtcRemoteView.TextureView(
-            uid: _remoteUid!,
-            channelId: widget.token!,
+          AgoraVideoView(
+            controller: VideoViewController.remote(
+              rtcEngine: _engine,
+              canvas: VideoCanvas(uid: _remoteUid),
+              connection: RtcConnection(channelId: widget.token),
+            ),
           ),
+          // RtcRemoteView.TextureView(
+          //   uid: _remoteUid!,
+          //   channelId: widget.token!,
+          // ),
           Padding(
             padding: const EdgeInsets.all(50),
             child: Align(
@@ -422,4 +433,3 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
         ));
   }
 }
-*/

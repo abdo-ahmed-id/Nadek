@@ -1,11 +1,7 @@
-/*
 import 'dart:async';
-import 'dart:ui';
 
 // import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,39 +48,51 @@ class _Live_StreamState extends State<Live_Stream> {
 
     _engine.registerEventHandler(
       RtcEngineEventHandler(
-          joinChannelSuccess: (String channel, int uid, int elapsed) {
+          onJoinChannelSuccess: (
+            RtcConnection connection,
+            int uid,
+          ) {
             print("local user $uid joined");
             setState(() {
               _localUserJoined = true;
             });
           },
-          userJoined: (int uid, int elapsed) {
+          onUserJoined: (RtcConnection connection, int uid, int elapsed) {
             print("remote user $uid joined");
             setState(() {
               _remoteUid = uid;
             });
           },
-          userOffline: (int uid, UserOfflineReason reason) {
+          onUserOffline: (RtcConnection connection, int uid,
+              UserOfflineReasonType reason) {
             print("remote user $uid left channel");
 
             setState(() {
               _remoteUid = null;
             });
           },
-          leaveChannel: (RtcStats stats) {}),
+          onLeaveChannel: (RtcConnection connection, RtcStats stats) {}),
     );
-
-    await _engine.joinChannel(null, channel, null, 0);
+    await _engine.joinChannel(
+      token: token ?? '',
+      channelId: channel,
+      options: const ChannelMediaOptions(
+        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+      ),
+      uid: _remoteUid ?? 0,
+    );
   }
 
   Future<void> _initAgoraRtcEngine() async {
     //_engine =  await RtcEngine.create(string_app.appId);
-    _engine =
-        await RtcEngine.createWithContext(RtcEngineContext(string_app.appId));
+    _engine = createAgoraRtcEngine();
+    await _engine.initialize(const RtcEngineContext(appId: string_app.appId));
     await _engine.enableVideo();
     await _engine.enableAudio();
 
-    await _engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine
+        .setChannelProfile(ChannelProfileType.channelProfileLiveBroadcasting);
     if (true) {
       await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
     } else {
@@ -100,7 +108,7 @@ class _Live_StreamState extends State<Live_Stream> {
       BlocProvider.of<NadekCubit>(context).PlayStartAndEndLive(
           token: token!, map: {'channel_token': liveModel!.token});
       await _engine.leaveChannel();
-      await _engine.destroy();
+      await _engine.release();
     }
   }
 
@@ -138,7 +146,13 @@ class _Live_StreamState extends State<Live_Stream> {
                     children: [
                       Center(
                         child: _localUserJoined
-                            ? RtcLocalView.SurfaceView()
+                            ? AgoraVideoView(
+                                controller: VideoViewController.remote(
+                                  rtcEngine: _engine,
+                                  canvas: VideoCanvas(uid: _remoteUid),
+                                  connection: RtcConnection(channelId: token),
+                                ),
+                              )
                             : const CircularProgressIndicator(),
                       ),
                       Padding(
@@ -296,7 +310,7 @@ class _Live_StreamState extends State<Live_Stream> {
                       token: token!, map: {'channel_token': liveModel!.token});
                   endLive = true;
                   await _engine.leaveChannel();
-                  await _engine.destroy();
+                  await _engine.release();
                   print("Live........");
                   Navigator.of(contex).pop(true);
                   Navigator.pop(context);
@@ -313,4 +327,3 @@ class _Live_StreamState extends State<Live_Stream> {
     _engine.switchCamera();
   }
 }
-*/

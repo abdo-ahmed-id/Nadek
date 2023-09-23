@@ -24,6 +24,9 @@ import 'package:nadek/presentation/screen/repprt_screen.dart';
 import 'package:nadek/presentation/screen/terms_and_conditions.dart';
 import 'package:nadek/presentation/screen/viewpager/view_pager_screen.dart';
 
+import 'screen/LiveUserNowPage.dart';
+import 'screen/Live_Stream.dart';
+
 class App_Routeing {
   late repository rpo;
   late NadekCubit cubit;
@@ -36,16 +39,16 @@ class App_Routeing {
   Route? create_app_route(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => splach_screen());
+        return MaterialPageRoute(builder: (_) => const splach_screen());
       case '/Home_screen':
-        return MaterialPageRoute(builder: (_) => Home_Screen());
+        return MaterialPageRoute(builder: (_) => const Home_Screen());
       case '/View_pager':
         return MaterialPageRoute(builder: (_) => view_pager_screen());
       case '/Create_Account':
-        return MaterialPageRoute(builder: (_) => Create_Account());
+        return MaterialPageRoute(builder: (_) => const Create_Account());
 
       case '/login_user':
-        return MaterialPageRoute(builder: (_) => login_user());
+        return MaterialPageRoute(builder: (_) => const login_user());
 
       case '/Sports_Selection':
         var data = settings.arguments as List;
@@ -57,10 +60,8 @@ class App_Routeing {
                   data[3].toString(),
                   data[4].toString(),
                 ));
-      // case '/Live_Stream':
-      //   return MaterialPageRoute(builder: (_) =>
-      //       Live_Stream()
-      //   );
+      case '/Live_Stream':
+        return MaterialPageRoute(builder: (_) => const Live_Stream());
       case '/Chats':
         var data = settings.arguments as List;
         return MaterialPageRoute(
@@ -76,12 +77,12 @@ class App_Routeing {
         return MaterialPageRoute(builder: (_) => Add_User(chat_id: data[0]));
 
       case '/Create_Group':
-        return MaterialPageRoute(builder: (_) => create_group());
+        return MaterialPageRoute(builder: (_) => const create_group());
       case '/Update_Account':
-        return MaterialPageRoute(builder: (_) => Update_Account());
+        return MaterialPageRoute(builder: (_) => const Update_Account());
 
       case '/Upload_Video':
-        return MaterialPageRoute(builder: (_) => Upload_Video());
+        return MaterialPageRoute(builder: (_) => const Upload_Video());
 
       case '/Show_Item':
         var data = settings.arguments as List;
@@ -94,29 +95,27 @@ class App_Routeing {
                   price: data[4].toString(),
                 ));
       case '/Cart':
-        return MaterialPageRoute(builder: (_) => Cart());
+        return MaterialPageRoute(builder: (_) => const Cart());
       case '/Profile':
-        return MaterialPageRoute(builder: (_) => ProfileUser());
+        return MaterialPageRoute(builder: (_) => const ProfileUser());
       case '/Maps':
-        return MaterialPageRoute(builder: (_) => Maps());
+        return MaterialPageRoute(builder: (_) => const Maps());
       case '/BestUsers':
-        return MaterialPageRoute(builder: (_) => BestUsers());
-      // case '/LiveUserNow':
-      //   return MaterialPageRoute(builder: (_) =>
-      //       LiveUserNow()
-      //   );
+        return MaterialPageRoute(builder: (_) => const BestUsers());
+      case '/LiveUserNow':
+        return MaterialPageRoute(builder: (_) => const LiveUserNow());
 
       case '/privacy_policy':
-        return MaterialPageRoute(builder: (_) => privacy_policy());
+        return MaterialPageRoute(builder: (_) => const privacy_policy());
       case '/termsAndConditions':
-        return MaterialPageRoute(builder: (_) => terms_and_conditions());
+        return MaterialPageRoute(builder: (_) => const terms_and_conditions());
       case '/ProfileOfUser':
         var data = settings.arguments as List;
 
         return MaterialPageRoute(
             builder: (_) => ProfileOfUser(user_id: data[0]));
       case '/FollowMe':
-        return MaterialPageRoute(builder: (_) => FollowMe());
+        return MaterialPageRoute(builder: (_) => const FollowMe());
       case '/report':
         return MaterialPageRoute(
             builder: (_) => repprt_screen(title: 'ابلاغ عن محتوي'));
